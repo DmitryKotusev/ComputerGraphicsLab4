@@ -1,18 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LogicManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    TMP_Dropdown selector;
+
+    private void Start()
     {
-        
+        selector = GetComponentInChildren<TMP_Dropdown>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnClickExitButton()
     {
-        
+        Application.Quit();
+    }
+
+    public void OnClickCleanButton()
+    {
+    }
+
+    public void OnSelectAlgorithm()
+    {
+        Debug.Log(selector.value);
     }
 }
