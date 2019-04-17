@@ -1,16 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class LogicManager : MonoBehaviour
 {
-    [SerializeField]
     TMP_Dropdown selector;
+    [SerializeField]
+    AppStates state;
+    GridGenerator grid;
+    QuadData firstSelectedQuad;
+    QuadData secondSelectedQuad;
 
     private void Start()
     {
         selector = GetComponentInChildren<TMP_Dropdown>();
+        grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridGenerator>();
     }
 
     public void OnClickExitButton()
@@ -20,10 +26,128 @@ public class LogicManager : MonoBehaviour
 
     public void OnClickCleanButton()
     {
+        grid.CleanGrid();
+        UnSelectQuads();
     }
 
     public void OnSelectAlgorithm()
     {
-        Debug.Log(selector.value);
+        switch (selector.value)
+        {
+            case 0:
+                {
+                    state = AppStates.STEP_BY_STEP_ALGORITHM;
+                    break;
+                }
+            case 1:
+                {
+                    state = AppStates.DIGIGTAL_DIFFERNTIAL_ANALYZER_ALGORITHM;
+                    break;
+                }
+            case 2:
+                {
+                    state = AppStates.BRESENHAMS_LINE_ALGORITHM;
+                    break;
+                }
+            case 3:
+                {
+                    state = AppStates.BRESENHAMS_LINE_ALGORITHM_FOR_THE_CIRCLE;
+                    break;
+                }
+        }
+    }
+
+    public void SelectQuad(string key)
+    {
+        if (firstSelectedQuad == null)
+        {
+            grid.SelectQuad(key);
+            firstSelectedQuad = grid.GetQuad(key);
+            return;
+        }
+        grid.SelectQuad(key);
+        secondSelectedQuad = grid.GetQuad(key);
+
+        if (firstSelectedQuad != secondSelectedQuad)
+        {
+            ExecuteAlgorithmLogic();
+            return;
+        }
+        secondSelectedQuad = null;
+    }
+
+    public void UnSelectQuads()
+    {
+        if (firstSelectedQuad != null)
+        {
+            grid.UnSelectQuad(firstSelectedQuad.GetX() + " " + firstSelectedQuad.GetZ());
+            firstSelectedQuad = null;
+        }
+        if (secondSelectedQuad != null)
+        {
+            grid.UnSelectQuad(secondSelectedQuad.GetX() + " " + secondSelectedQuad.GetZ());
+            secondSelectedQuad = null;
+        }
+    }
+
+    private void ExecuteAlgorithmLogic()
+    {
+        // grid.CleanGrid();
+        List<Vector2> squadsToMark;
+        switch (state)
+        {
+            case AppStates.STEP_BY_STEP_ALGORITHM:
+                {
+                    if (firstSelectedQuad.GetX() < secondSelectedQuad.GetX())
+                    {
+                        squadsToMark = RastAlgorithms.StepByStep((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
+                            (int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ());
+                        break;
+                    }
+                    else
+                    {
+                        squadsToMark = RastAlgorithms.StepByStep((int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ(),
+                            (int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ());
+                        break;
+                    }
+
+                }
+            case AppStates.DIGIGTAL_DIFFERNTIAL_ANALYZER_ALGORITHM:
+                {
+                    if (firstSelectedQuad.GetX() < secondSelectedQuad.GetX())
+                    {
+                        squadsToMark = RastAlgorithms.DigitalDifferentialAnalyzer((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
+                            (int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ());
+                        break;
+                    }
+                    else
+                    {
+                        squadsToMark = RastAlgorithms.DigitalDifferentialAnalyzer((int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ(),
+                            (int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ());
+                        break;
+                    }
+                }
+            case AppStates.BRESENHAMS_LINE_ALGORITHM:
+                {
+                    Debug.Log("Executing BRESENHAMS_LINE_ALGORITHM");
+                    return;
+                }
+            case AppStates.BRESENHAMS_LINE_ALGORITHM_FOR_THE_CIRCLE:
+                {
+                    Debug.Log("Executing BRESENHAMS_LINE_ALGORITHM_FOR_THE_CIRCLE");
+                    return;
+                }
+            default:
+                {
+                    return;
+                }
+        }
+
+        UnSelectQuads();
+
+        foreach (Vector2 coordinates in squadsToMark)
+        {
+            grid.MarkQuad(coordinates.x + " " + coordinates.y);
+        }
     }
 }

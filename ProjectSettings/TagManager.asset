@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - InputManager
+  - LogicManager
+  - Grid
   layers:
   - Default
   - TransparentFX
