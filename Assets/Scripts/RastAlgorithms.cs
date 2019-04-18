@@ -80,6 +80,117 @@ public class RastAlgorithms : MonoBehaviour
         return resultList;
     }
 
+    public static List<Vector2> BresenhamsLine(int x1, int z1, int x2, int z2)
+    {
+        List<Vector2> resultList = new List<Vector2>();
+
+        int a = z2 - z1;
+        int b = x1 - x2;
+        int signA, signB;
+
+        if (a < 0)
+        {
+            signA = -1;
+        }
+        else
+        {
+            signA = 1;
+        }
+
+        if (b < 0)
+        {
+            signB = -1;
+        }
+        else
+        {
+            signB = 1;
+        }
+
+        int f = 0;
+        int x = x1;
+        int z = z1;
+        resultList.Add(new Vector2(x, z));
+
+        if(Mathf.Abs(a) < Mathf.Abs(b))
+        {
+            do
+            {
+                f = f + a * signA;
+
+                if (f > 0)
+                {
+                    f = f - b * signB;
+                    z = z + signA;
+                }
+                x = x - signB;
+                resultList.Add(new Vector2(x, z));
+            }
+            while (x != x2 || z != z2);
+        }
+        else
+        {
+            do
+            {
+                f = f + b * signB;
+
+                if (f > 0)
+                {
+                    f = f - a * signA;
+                    x = x - signB;
+                }
+                z = z + signA;
+                resultList.Add(new Vector2(x, z));
+            }
+            while (x != x2 || z != z2);
+        }
+
+        return resultList;
+    }
+
+    public static List<Vector2> BresenhamsLineForTheCirle(int roundX, int roundZ, int centerX, int centerZ)
+    {
+        List<Vector2> resultList = new List<Vector2>();
+
+        float r = Mathf.Sqrt((centerX - roundX) * (centerX - roundX) + (centerZ - roundZ) * (centerZ - roundZ));
+
+        resultList.Add(new Vector2(centerX, centerZ));
+
+        int x = 0;
+        int z = Mathf.RoundToInt(r);
+        float e = 3 - 2 * r;
+        AddOctantPixel(x, z, centerX, centerZ, resultList);
+        while (x < z)
+        {
+            if(e >= 0)
+            {
+                e = e + 4 * (x - z) + 10;
+                x = x + 1;
+                z = z - 1;
+            }
+            else
+            {
+                e = e + 4 * x + 6;
+                x = x + 1;
+            }
+            AddOctantPixel(x, z, centerX, centerZ, resultList);
+        }
+
+        return resultList;
+    }
+
+    static void AddOctantPixel(int x, int z, int centerX, int centerZ, List<Vector2> resultList)
+    {
+        resultList.Add(new Vector2(centerX + x, centerZ + z)); // 2
+        resultList.Add(new Vector2(centerX + x, centerZ - z)); // 7
+        resultList.Add(new Vector2(centerX - x, centerZ + z)); // 3
+        resultList.Add(new Vector2(centerX - x, centerZ - z)); // 5
+
+        resultList.Add(new Vector2(centerX + z, centerZ + x)); // 1
+        resultList.Add(new Vector2(centerX + z, centerZ - x)); // 8
+        resultList.Add(new Vector2(centerX - z, centerZ + x)); // 4
+        resultList.Add(new Vector2(centerX - z, centerZ - x)); // 6
+    }
+
     static float CountK(float x1, float z1, float x2, float z2)
     {
         return (z2 - z1) / (x2 - x1);

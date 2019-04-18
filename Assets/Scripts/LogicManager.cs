@@ -129,13 +129,15 @@ public class LogicManager : MonoBehaviour
                 }
             case AppStates.BRESENHAMS_LINE_ALGORITHM:
                 {
-                    Debug.Log("Executing BRESENHAMS_LINE_ALGORITHM");
-                    return;
+                    squadsToMark = RastAlgorithms.BresenhamsLine((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
+                            (int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ());
+                    break;
                 }
             case AppStates.BRESENHAMS_LINE_ALGORITHM_FOR_THE_CIRCLE:
                 {
-                    Debug.Log("Executing BRESENHAMS_LINE_ALGORITHM_FOR_THE_CIRCLE");
-                    return;
+                    squadsToMark = RastAlgorithms.BresenhamsLineForTheCirle((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
+                            (int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ());
+                    break;
                 }
             default:
                 {
