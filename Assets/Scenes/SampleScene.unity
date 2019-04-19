@@ -599,8 +599,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501834e6bf465a4483158c3e4571ea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoomSpeed: 30
+  motionSpeed: 50
+  grabHandTexture: {fileID: 2800000, guid: 9c87ecf4f48058e4d819ff8ecbd0edf2, type: 3}
   minDistanceToGrid: 3
-  maxDistanceToGrid: 12
+  maxDistanceToGrid: 40
   boundaries: {x: 12, y: 12}
   startCameraPosition: {x: 0, y: 40, z: 0}
   zoomStep: 0.5
