@@ -601,10 +601,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoomSpeed: 30
   motionSpeed: 50
-  grabHandTexture: {fileID: 2800000, guid: 9c87ecf4f48058e4d819ff8ecbd0edf2, type: 3}
   minDistanceToGrid: 3
   maxDistanceToGrid: 40
-  boundaries: {x: 12, y: 12}
+  boundaries: {x: 60, y: 60}
   startCameraPosition: {x: 0, y: 40, z: 0}
   zoomStep: 0.5
 --- !u!114 &534669907
@@ -835,8 +834,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15babc444f9a6254d8a474f4c2dd1d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalMouseInput: 0
-  verticalMouseInput: 0
+  horizontalInput: 0
+  verticalInput: 0
   mouseWheelUp: 0
   mouseWheelDown: 0
   leftMouseButtonClick: 0
@@ -1495,7 +1494,7 @@ MonoBehaviour:
   unTouchedMaterial: {fileID: 2100000, guid: b2670af669d83b44fb5b0d7bf3a07863, type: 2}
   selectedMaterial: {fileID: 2100000, guid: 7d265b47322ece740bcc8de778744c0c, type: 2}
   markedMaterial: {fileID: 2100000, guid: fe25dea0c8211584e976bb760d63795c, type: 2}
-  tilePrefab: {fileID: 7326892124477487561, guid: c129ffb2ab63c034f8bd9657bfe68731,
+  tilePrefab: {fileID: 3539379324088416186, guid: 78a0ccd71dd965b4a9fdd18f275b9173,
     type: 3}
   verticalSize: 30
   horizontalSize: 60

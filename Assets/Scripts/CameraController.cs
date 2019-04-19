@@ -9,7 +9,6 @@ public class CameraController : MonoBehaviour
 
     public float zoomSpeed = 0.2f;
     public float motionSpeed = 10f;
-    [SerializeField] Texture2D grabHandTexture;
     [SerializeField] float minDistanceToGrid = 3f;
     [SerializeField] float maxDistanceToGrid = 12f;
     [SerializeField] Vector2 boundaries = new Vector2(12, 12);
@@ -23,9 +22,8 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (inputManager.middleMouseButtonPress && !EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            Cursor.SetCursor(grabHandTexture, Vector2.zero, CursorMode.Auto);
             HandleCameraMotion();
         }
         HandleCameraZoom();
@@ -34,9 +32,11 @@ public class CameraController : MonoBehaviour
     void HandleCameraMotion()
     {
         Vector3 oldMousePosition = transform.localToWorldMatrix * Input.mousePosition;
-        Vector3 motionVector = (new Vector3(-inputManager.horizontalMouseInput, -inputManager.verticalMouseInput, 0f)).normalized;
-        transform.Translate(motionVector * motionSpeed * Time.deltaTime);
-        Input.Mou
+        Vector3 motionVector = (new Vector3(inputManager.horizontalInput, 0f, inputManager.verticalInput)).normalized;
+        Vector3 newPossiblePosition = transform.position + motionVector * motionSpeed * Time.deltaTime;
+        Vector3 newPosition = new Vector3(Mathf.Clamp(newPossiblePosition.x, -boundaries.x, boundaries.x),
+            newPossiblePosition.y, Mathf.Clamp(newPossiblePosition.z, -boundaries.y, boundaries.y));
+        transform.position = newPosition;
     }
 
     void HandleCameraZoom()

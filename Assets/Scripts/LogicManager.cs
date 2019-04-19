@@ -98,6 +98,8 @@ public class LogicManager : MonoBehaviour
         {
             case AppStates.STEP_BY_STEP_ALGORITHM:
                 {
+                    grid.ShowCoordinates(firstSelectedQuad.GetX() + " " + firstSelectedQuad.GetZ());
+                    grid.ShowCoordinates(secondSelectedQuad.GetX() + " " + secondSelectedQuad.GetZ());
                     if (firstSelectedQuad.GetX() < secondSelectedQuad.GetX())
                     {
                         squadsToMark = RastAlgorithms.StepByStep((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
@@ -114,6 +116,8 @@ public class LogicManager : MonoBehaviour
                 }
             case AppStates.DIGIGTAL_DIFFERNTIAL_ANALYZER_ALGORITHM:
                 {
+                    grid.ShowCoordinates(firstSelectedQuad.GetX() + " " + firstSelectedQuad.GetZ());
+                    grid.ShowCoordinates(secondSelectedQuad.GetX() + " " + secondSelectedQuad.GetZ());
                     if (firstSelectedQuad.GetX() < secondSelectedQuad.GetX())
                     {
                         squadsToMark = RastAlgorithms.DigitalDifferentialAnalyzer((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
@@ -129,14 +133,44 @@ public class LogicManager : MonoBehaviour
                 }
             case AppStates.BRESENHAMS_LINE_ALGORITHM:
                 {
-                    squadsToMark = RastAlgorithms.BresenhamsLine((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
-                            (int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ());
-                    break;
+                    grid.ShowCoordinates(firstSelectedQuad.GetX() + " " + firstSelectedQuad.GetZ());
+                    grid.ShowCoordinates(secondSelectedQuad.GetX() + " " + secondSelectedQuad.GetZ());
+                    if (Mathf.Abs(firstSelectedQuad.GetX() - secondSelectedQuad.GetX()) > Mathf.Abs(firstSelectedQuad.GetZ() - secondSelectedQuad.GetZ()))
+                    {
+                        if (firstSelectedQuad.GetX() < secondSelectedQuad.GetX())
+                        {
+                            squadsToMark = RastAlgorithms.BresenhamsLine2((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
+                                (int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ());
+                            break;
+                        }
+                        else
+                        {
+                            squadsToMark = RastAlgorithms.BresenhamsLine2((int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ(),
+                                (int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ());
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (firstSelectedQuad.GetZ() < secondSelectedQuad.GetZ())
+                        {
+                            squadsToMark = RastAlgorithms.BresenhamsLine2((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
+                                (int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ());
+                            break;
+                        }
+                        else
+                        {
+                            squadsToMark = RastAlgorithms.BresenhamsLine2((int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ(),
+                                (int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ());
+                            break;
+                        }
+                    }
                 }
             case AppStates.BRESENHAMS_LINE_ALGORITHM_FOR_THE_CIRCLE:
                 {
                     squadsToMark = RastAlgorithms.BresenhamsLineForTheCirle((int)firstSelectedQuad.GetX(), (int)firstSelectedQuad.GetZ(),
                             (int)secondSelectedQuad.GetX(), (int)secondSelectedQuad.GetZ());
+                    grid.ShowCoordinates(secondSelectedQuad.GetX() + " " + secondSelectedQuad.GetZ());
                     break;
                 }
             default:

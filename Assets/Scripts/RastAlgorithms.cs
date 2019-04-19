@@ -86,7 +86,16 @@ public class RastAlgorithms : MonoBehaviour
 
         int a = z2 - z1;
         int b = x1 - x2;
-        int signA, signB;
+        int signA, signB, sign;
+
+        if (Mathf.Abs(a) > Mathf.Abs(b))
+        {
+            sign = 1;
+        }
+        else
+        {
+            sign = -1;
+        }
 
         if (a < 0)
         {
@@ -111,7 +120,7 @@ public class RastAlgorithms : MonoBehaviour
         int z = z1;
         resultList.Add(new Vector2(x, z));
 
-        if(Mathf.Abs(a) < Mathf.Abs(b))
+        if(sign == -1)
         {
             do
             {
@@ -145,6 +154,77 @@ public class RastAlgorithms : MonoBehaviour
         }
 
         return resultList;
+    }
+
+    public static List<Vector2> BresenhamsLine2(int x1, int z1, int x2, int z2)
+    {
+        List<Vector2> resultList = new List<Vector2>();
+
+        int distance = Mathf.Max(Mathf.Abs(z2 - z1), Mathf.Abs(x2 - x1));
+
+        if ((x2 - x1) == 0)
+        {
+            for (int j = 0; j <= distance; j++)
+            {
+                if (z1 < z2)
+                {
+                    resultList.Add(new Vector2(x1, z1 + j));
+                }
+                else
+                {
+                    resultList.Add(new Vector2(x1, z1 - j));
+                }
+            }
+            return resultList;
+        }
+
+        int deltax = Mathf.Abs(x2 - x1);
+        int deltaz = Mathf.Abs(z2 - z1);
+
+        if (deltax >= deltaz)
+        {
+            int error = 0;
+            int deltaerr = deltaz;
+            int z = z1;
+            int dirz = z2 - z1;
+            if (dirz > 0)
+                dirz = 1;
+            if (dirz < 0)
+                dirz = -1;
+            for (int x = x1; x <= x2; x++)
+            {
+                resultList.Add(new Vector2(x, z));
+                error = error + deltaerr;
+                if (2 * error >= deltax)
+                {
+                    z = z + dirz;
+                    error = error - deltax;
+                }
+            }
+            return resultList;
+        }
+        else
+        {
+            int error = 0;
+            int deltaerr = deltax;
+            int x = x1;
+            int dirx = x2 - x1;
+            if (dirx > 0)
+                dirx = 1;
+            if (dirx < 0)
+                dirx = -1;
+            for (int z = z1; z <= z2; z++)
+            {
+                resultList.Add(new Vector2(x, z));
+                error = error + deltaerr;
+                if (2 * error >= deltaz)
+                {
+                    x = x + dirx;
+                    error = error - deltaz;
+                }
+            }
+            return resultList;
+        }
     }
 
     public static List<Vector2> BresenhamsLineForTheCirle(int roundX, int roundZ, int centerX, int centerZ)

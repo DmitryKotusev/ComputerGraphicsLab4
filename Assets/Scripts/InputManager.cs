@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public float horizontalMouseInput;
-    public float verticalMouseInput;
+    public float horizontalInput;
+    public float verticalInput;
     public bool mouseWheelUp;
     public bool mouseWheelDown;
     public bool leftMouseButtonClick;
@@ -14,8 +14,8 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        horizontalMouseInput = Input.GetAxis("Mouse X");
-        verticalMouseInput = Input.GetAxis("Mouse Y");
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
         mouseWheelUp = Input.GetAxis("Mouse ScrollWheel") > 0;
         mouseWheelDown = Input.GetAxis("Mouse ScrollWheel") < 0;
         leftMouseButtonClick = Input.GetMouseButtonDown(0);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GridGenerator : MonoBehaviour
 {
@@ -65,6 +66,7 @@ public class GridGenerator : MonoBehaviour
     {
         foreach(string key in quads.Keys)
         {
+            quads[key].GetText().text = "";
             quads[key].SetMaterial(unTouchedMaterial);
         }
     }
@@ -89,7 +91,16 @@ public class GridGenerator : MonoBehaviour
 
     public void MarkQuad(string key)
     {
-        quads[key].SetMaterial(markedMaterial);
+        if (quads.ContainsKey(key))
+        {
+            
+            quads[key].SetMaterial(markedMaterial);
+        }   
+    }
+
+    public void ShowCoordinates(string key)
+    {
+        quads[key].GetText().text = quads[key].GetX() + " " + quads[key].GetZ();
     }
 
     void spawnTile(float x, float z)
@@ -99,6 +110,7 @@ public class GridGenerator : MonoBehaviour
         QuadData data = tile.GetComponent<QuadData>();
         data.SetX(x - 0.5f);
         data.SetZ(z - 0.5f);
+        data.SetText(tile.GetComponentInChildren<TextMeshPro>());
         quads.Add(tile.name, data);
     }
 
