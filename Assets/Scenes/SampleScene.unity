@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -599,9 +599,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501834e6bf465a4483158c3e4571ea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minZoom: 3
-  maxZoom: 8
-  startCameraPosition: {x: 0, y: 30, z: 0}
+  minDistanceToGrid: 3
+  maxDistanceToGrid: 12
+  boundaries: {x: 12, y: 12}
+  startCameraPosition: {x: 0, y: 40, z: 0}
   zoomStep: 0.5
 --- !u!114 &534669907
 MonoBehaviour:
@@ -831,10 +832,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15babc444f9a6254d8a474f4c2dd1d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontalMouseInput: 0
+  verticalMouseInput: 0
   mouseWheelUp: 0
   mouseWheelDown: 0
   leftMouseButtonClick: 0
   rightMouseButtonClick: 0
+  middleMouseButtonPress: 0
 --- !u!4 &770326029
 Transform:
   m_ObjectHideFlags: 0
@@ -1781,7 +1785,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
+  m_fontSize: 24.4
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
