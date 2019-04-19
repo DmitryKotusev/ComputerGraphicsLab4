@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class RastAlgorithms : MonoBehaviour
 {
     public static List<Vector2> StepByStep(int x1, int z1, int x2, int z2)
     {
+        DateTime before = DateTime.Now;
         List<Vector2> resultList = new List<Vector2>();
         int distance = Mathf.Max(Mathf.Abs(z2 - z1), Mathf.Abs(x2 - x1));
         float step = (float)Mathf.Abs(x2 - x1) / distance;
@@ -36,12 +38,16 @@ public class RastAlgorithms : MonoBehaviour
             x += step;
             distance--;
         }
+        DateTime after = DateTime.Now;
+        TimeSpan duration = after.Subtract(before);
+        Debug.Log("StepByStep duration in milliseconds: " + duration.Milliseconds);
 
         return resultList;
     }
 
     public static List<Vector2> DigitalDifferentialAnalyzer(int x1, int z1, int x2, int z2)
     {
+        DateTime before = DateTime.Now;
         List<Vector2> resultList = new List<Vector2>();
         int distance = Mathf.Max(Mathf.Abs(z2 - z1), Mathf.Abs(x2 - x1));
         
@@ -77,6 +83,9 @@ public class RastAlgorithms : MonoBehaviour
             i++;
         }
 
+        DateTime after = DateTime.Now;
+        TimeSpan duration = after.Subtract(before);
+        Debug.Log("DigitalDifferentialAnalyzer duration in milliseconds: " + duration.Milliseconds);
         return resultList;
     }
 
@@ -158,6 +167,7 @@ public class RastAlgorithms : MonoBehaviour
 
     public static List<Vector2> BresenhamsLine2(int x1, int z1, int x2, int z2)
     {
+        DateTime before = DateTime.Now;
         List<Vector2> resultList = new List<Vector2>();
 
         int distance = Mathf.Max(Mathf.Abs(z2 - z1), Mathf.Abs(x2 - x1));
@@ -201,6 +211,9 @@ public class RastAlgorithms : MonoBehaviour
                     error = error - deltax;
                 }
             }
+            DateTime after = DateTime.Now;
+            TimeSpan duration = after.Subtract(before);
+            Debug.Log("BresenhamsLine duration in milliseconds: " + duration.Milliseconds);
             return resultList;
         }
         else
@@ -223,12 +236,16 @@ public class RastAlgorithms : MonoBehaviour
                     error = error - deltaz;
                 }
             }
+            DateTime after = DateTime.Now;
+            TimeSpan duration = after.Subtract(before);
+            Debug.Log("BresenhamsLine duration in milliseconds: " + duration.Milliseconds);
             return resultList;
         }
     }
 
     public static List<Vector2> BresenhamsLineForTheCirle(int roundX, int roundZ, int centerX, int centerZ)
     {
+        DateTime before = DateTime.Now;
         List<Vector2> resultList = new List<Vector2>();
 
         float r = Mathf.Sqrt((centerX - roundX) * (centerX - roundX) + (centerZ - roundZ) * (centerZ - roundZ));
@@ -255,6 +272,9 @@ public class RastAlgorithms : MonoBehaviour
             AddOctantPixel(x, z, centerX, centerZ, resultList);
         }
 
+        DateTime after = DateTime.Now;
+        TimeSpan duration = after.Subtract(before);
+        Debug.Log("BresenhamsLineForTheCirle duration in milliseconds: " + duration.Milliseconds);
         return resultList;
     }
 
