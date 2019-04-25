@@ -135,7 +135,7 @@ public class LogicManager : MonoBehaviour
                 {
                     grid.ShowCoordinates(firstSelectedQuad.GetX() + " " + firstSelectedQuad.GetZ());
                     grid.ShowCoordinates(secondSelectedQuad.GetX() + " " + secondSelectedQuad.GetZ());
-                    if (Mathf.Abs(firstSelectedQuad.GetX() - secondSelectedQuad.GetX()) > Mathf.Abs(firstSelectedQuad.GetZ() - secondSelectedQuad.GetZ()))
+                    if (Mathf.Abs(firstSelectedQuad.GetX() - secondSelectedQuad.GetX()) >= Mathf.Abs(firstSelectedQuad.GetZ() - secondSelectedQuad.GetZ()))
                     {
                         if (firstSelectedQuad.GetX() < secondSelectedQuad.GetX())
                         {
